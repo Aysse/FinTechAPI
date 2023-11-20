@@ -1,0 +1,36 @@
+version: '3'
+services:
+  # Servicio para la aplicación Node.js
+  node_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql_db
+    command: npm start
+
+  # Servicio para la base de datos MySQL
+  mysql_db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fin_tech_api_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./dumps:/docker-entrypoint-initdb.d
+
+  # Servicio para phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql_db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8090:80"

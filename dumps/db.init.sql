@@ -1,0 +1,18 @@
+SET NAMES utf8mb4;
+
+-- Create DB
+CREATE DATABASE IF NOT EXISTS fin_tech_api_db;
+
+-- Use DB
+USE fin_tech_api_db;
+
+-- Create movements table
+CREATE TABLE IF NOT EXISTS movements (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    movement_type VARCHAR(255) NOT NULL,
+    amount INT NOT NULL,
+    address VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE movements ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE movements ADD COLUMN updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
