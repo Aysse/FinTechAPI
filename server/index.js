@@ -1,13 +1,18 @@
-import express from 'express';
+import express, { json } from 'express';
+import { createMovementRouter } from '../routes/movements.js';
 
-const port = process.env.PORT ?? 3000;
+export const createApp = ({ movementModel }) => {
+  const app = express();
 
-const app = express();
+  app.use(json());
+  // delete express header
+  app.disable('x-powered-by');
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>');
-});
+  app.use('/movements', createMovementRouter({ movementModel }));
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+  const PORT = process.env.PORT ?? 3000;
+
+  app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+  });
+};
