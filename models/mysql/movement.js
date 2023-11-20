@@ -14,7 +14,7 @@ const connection = await mysql.createConnection(connectionString);
 export class MovementModel {
   static async getByAccount ({ accountId }) {
     const [movements] = await connection.query(
-      'SELECT movement_type, amount FROM movements WHERE id = ?;',
+      'SELECT movement_type, amount FROM movements WHERE account_id = ?;',
       [accountId]
     );
 
